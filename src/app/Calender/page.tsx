@@ -8,6 +8,7 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import { props } from './props';
 import { EventItem, Event } from '@/type';
 import EventDetails from '@/Components/DetailsPopup';
+import moment from 'moment';
 
 const DnDCalendar = withDragAndDrop<EventItem>(Calendar);
 
@@ -78,23 +79,23 @@ function Page() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center bg-slate-200 py-5">
+      <div className="flex flex-col px-24 bg-slate-200 py-5">
         <h2 className='text-2xl font-bold'>Events</h2>
-        <div className='flex justify-center   '>
-          {events.map((item, index) => (
-            <div
-              className='bg-blue-200 m-2 rounded-md p-3'
-              key={index}
-              draggable="true"
-              onDragStart={() => setDraggedEvent(item)}
-            >
-              <p>{item.eventName}</p>
-              <p>{item.address}</p>
-              <p>{item.time}</p>
-            </div>
-
-          ))}
+        <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 ">
+      {events.map((item, index) => (
+        <div
+          className="bg-slate-700 text-white rounded-md p-3"
+          key={index}
+          draggable="true"
+          onDragStart={() => setDraggedEvent(item)}
+        >
+          <p>{item.eventName}</p>
+          <p>{item.address}</p>
+          <p>{moment(item.time).format("HH:mm A")}</p>
         </div>
+      ))}
+    </div>
+
       </div>
       <main className="flex min-h-screen justify-center p-24 bg-slate-100">
         <div className="w-full ">

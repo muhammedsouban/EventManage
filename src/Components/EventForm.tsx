@@ -23,16 +23,18 @@ export default function EventForm({ show }: EventFormProps) {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const event: Event = {
-            id: uuidv4(),
-            eventName: eventName,
-            address: address,
-            time: time ? time.toISOString() : ''
-        };
-        const storedEvents = JSON.parse(localStorage.getItem('Events') || '[]');
-        storedEvents.push(event);
-        localStorage.setItem('Events', JSON.stringify(storedEvents));
-        show();
+        if (eventName && address) {
+            const event: Event = {
+                id: uuidv4(),
+                eventName: eventName,
+                address: address,
+                time: time ? time.toISOString() : ''
+            };
+            const storedEvents = JSON.parse(localStorage.getItem('Events') || '[]');
+            storedEvents.push(event);
+            localStorage.setItem('Events', JSON.stringify(storedEvents));
+            show();
+        }
     };
 
 
@@ -57,10 +59,13 @@ export default function EventForm({ show }: EventFormProps) {
                             <div className="flex flex-col items-start">
                                 <input
                                     type="text"
+                                    title="Please enter a valid Event Name"
+                                    pattern="^(?!\\s)[^\s]+$"
                                     onChange={(e) => setEventName(e.target.value)}
                                     value={eventName}
                                     name="name"
                                     className="block w-full mt-1 px-2 rounded-md shadow-sm outline-none text-black py-1 border border-neutral-400"
+                                    required
                                 />
                             </div>
                         </div>
@@ -70,11 +75,14 @@ export default function EventForm({ show }: EventFormProps) {
                             </label>
                             <div className="flex flex-col items-start">
                                 <input
+                                title="Please enter a valid Address"
                                     type="text"
+                                    pattern="^(?!\\s)[^\s]+$"
                                     onChange={(e) => setAddress(e.target.value)}
                                     value={address}
                                     name="address"
                                     className="block w-full mt-1 px-2 rounded-md shadow-sm outline-none text-black py-1 border border-neutral-400"
+                                    required
                                 />
                             </div>
                         </div>
@@ -90,6 +98,7 @@ export default function EventForm({ show }: EventFormProps) {
                                             value={time}
                                             onChange={handleTimeChange}
                                             className="w-full"
+                                        
                                         />
                                     </div>
                                 </LocalizationProvider>
