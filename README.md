@@ -11,7 +11,7 @@ git clone https://github.com/muhammedsouban/EventManage.git
 cd EventManage
 
 2. Install Dependencies:
-3. To install the required dependencies for the project, run the following command:
+To install the required dependencies for the project, run the following command:
 
 npm install
 
