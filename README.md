@@ -5,7 +5,8 @@ Below are the instructions to clone the repository and get the project up and ru
 ## Getting Started.
 
 Clone the repository:
-git clone https://github.com/muhammedsouban/Assignment-UserManagement.git cd Assignment-UserManagement
+git clone https://github.com/muhammedsouban/EventManage.git 
+cd EventManage
 
 Install Dependencies:
 To install the required dependencies for the project, run the following command:
