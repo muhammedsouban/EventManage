@@ -1,5 +1,6 @@
 Event-Management Web App
-This repository contains an Event-Management Web App, which was created using Next js , Typescript , Tailwind css and react-big-calender 
+
+This is an Event-Management Web App, which was created using Next js , Typescript , Tailwind css and react-big-calender 
 Below are the instructions to clone the repository and get the project up and running on your local machine.
 
 ## Getting Started.
