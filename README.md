@@ -5,20 +5,17 @@ Below are the instructions to clone the repository and get the project up and ru
 
 ## Getting Started.
 
-Clone the repository:
+1. Clone the repository:
 
-git clone https://github.com/muhammedsouban/EventManage.git 
-
+git clone https://github.com/muhammedsouban/EventManage.git
 cd EventManage
 
-Install Dependencies:
-
-To install the required dependencies for the project, run the following command:
+2. Install Dependencies:
+3. To install the required dependencies for the project, run the following command:
 
 npm install
 
-Run the Development Server:
-
+3. Run the Development Server:
 To start the development server and run the web application, use the following command:
 
 npm run dev
