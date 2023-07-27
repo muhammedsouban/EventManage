@@ -17,11 +17,6 @@ interface EventFormProps {
 }
 
 export default function EventDetails({ show,details}: EventFormProps) {
-    const [time, setTime] = useState<Date | null>(parseISO('2023-07-23T00:00:00'));
-
-    const handleTimeChange = (newValue: Date | null) => {
-        setTime(newValue);
-    };
 
     return (
         <div>
@@ -75,6 +70,18 @@ export default function EventDetails({ show,details}: EventFormProps) {
                                         <TimePicker
                                         disabled
                                             value={moment(`${details.data?.event?.time}`).toDate()}
+                                            className="w-full"
+                                        />
+                                    </div>
+                                </LocalizationProvider>
+                            </div>
+                            <p>To</p>
+                            <div className="bg-white">
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <div>
+                                        <TimePicker
+                                        disabled
+                                            value={moment(`${details.data?.event?.end}`).toDate()}
                                             className="w-full"
                                         />
                                     </div>

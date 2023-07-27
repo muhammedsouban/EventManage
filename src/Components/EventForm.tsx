@@ -14,28 +14,42 @@ type ShowFunction = () => void;
 }
 export default function EventForm({ show }: EventFormProps) {
     const [time, setTime] = useState<Date | null>(parseISO('2023-07-23T00:00:00'));
+    const [endTime, setEndTime] = useState<Date | null>(parseISO('2023-07-23T00:00:00'));
+
     const [eventName, setEventName] = useState<string>('');
     const [address, setAddress] = useState<string>('');
 
     const handleTimeChange = (newValue: Date | null) => {
         setTime(newValue);
     };
+    const handleEndTimeChange = (newValue: Date | null) => {
+        setEndTime(newValue);
+    };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (eventName && address) {
-            const event: Event = {
-                id: uuidv4(),
-                eventName: eventName,
-                address: address,
-                time: time ? time.toISOString() : ''
-            };
-            const storedEvents = JSON.parse(localStorage.getItem('Events') || '[]');
-            storedEvents.push(event);
-            localStorage.setItem('Events', JSON.stringify(storedEvents));
-            show();
+        if (eventName && address && time && endTime) {
+            const timeDifferenceInMinutes = (endTime.getTime() - time.getTime()) / (1000 * 60);
+    
+            if (timeDifferenceInMinutes >= 30) {
+                const event: Event = {
+                    id: uuidv4(),
+                    eventName: eventName,
+                    address: address,
+                    time: time.toISOString(),
+                    end: endTime.toISOString()
+                };
+    
+                const storedEvents = JSON.parse(localStorage.getItem('Events') || '[]');
+                storedEvents.push(event);
+                localStorage.setItem('Events', JSON.stringify(storedEvents));
+                show();
+            } else {
+                alert("Event Need Atleast 30 Minutes.");
+            }
         }
     };
+    
 
 
     return (
@@ -97,6 +111,19 @@ export default function EventForm({ show }: EventFormProps) {
                                         <TimePicker
                                             value={time}
                                             onChange={handleTimeChange}
+                                            className="w-full"
+                                        
+                                        />
+                                    </div>
+                                </LocalizationProvider>
+                            </div>
+                            <p>To</p>
+                            <div className="bg-white">
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <div>
+                                        <TimePicker
+                                            value={endTime}
+                                            onChange={handleEndTimeChange}
                                             className="w-full"
                                         
                                         />

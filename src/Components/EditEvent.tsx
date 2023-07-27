@@ -17,11 +17,17 @@ interface EventFormProps {
 export default function EditEvent({ show, id }: EventFormProps) {
     const [events, setEvents] = useState<Event[]>([]);
     const [time, setTime] = useState<Date | null>(parseISO('2023-7-23T00:00:00'));
+    const [endTime, setEndTime] = useState<Date | null>(parseISO('2023-7-23T00:00:00'));
+
     const [eventName, setEventName] = useState<string>('');
     const [address, setAddress] = useState<string>('');
 
     const handleTimeChange = (newValue: Date | null) => {
         setTime(newValue);
+    };
+
+    const handleEndTimeChange = (newValue: Date | null) => {
+        setEndTime(newValue);
     };
 
     useEffect(() => {
@@ -32,19 +38,29 @@ export default function EditEvent({ show, id }: EventFormProps) {
             setEventName(eventToEdit.eventName);
             setAddress(eventToEdit.address);
             setTime(parseISO(eventToEdit.time));
+            setEndTime(parseISO(eventToEdit.end))
         }
     }, [id]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const updatedEvents = events.map((event: Event) =>
-            event.id === id ? { ...event, eventName, address, time:time? time.toISOString() :''} : event
-        );
-
-        setEvents(updatedEvents);
-        localStorage.setItem('Events', JSON.stringify(updatedEvents));
-        show();
+    
+        if (eventName && address && time && endTime) {
+            const timeDifference = (endTime.getTime() - time.getTime()) / (1000 * 60);
+    
+            if (timeDifference >= 30) {
+                const updatedEvents = events.map((event: Event) =>
+                    event.id === id ? { ...event, eventName, address, time: time.toISOString(), end: endTime.toISOString() } : event
+                );
+    
+                setEvents(updatedEvents);
+    
+                localStorage.setItem('Events', JSON.stringify(updatedEvents));
+                show();
+            } else {
+                alert("End time must be greater than 30 minutes from the start time.");
+            }
+        }
     };
 
     return (
@@ -100,6 +116,18 @@ export default function EditEvent({ show, id }: EventFormProps) {
                                         <TimePicker
                                             value={time}
                                             onChange={handleTimeChange}
+                                            className="w-full"
+                                        />
+                                    </div>
+                                </LocalizationProvider>
+                            </div>
+                            <p>To</p>
+                            <div className="bg-white">
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <div>
+                                        <TimePicker
+                                            value={endTime}
+                                            onChange={handleEndTimeChange}
                                             className="w-full"
                                         />
                                     </div>

@@ -52,7 +52,8 @@ const EventList = ({ create }: EventFormProps) => {
                         <tr className='bg-gray-800 '>
                             <th className="px-4 py-2">Event Name</th>
                             <th className="px-4 py-2">Address</th>
-                            <th className="px-4 py-2">Time</th>
+                            <th className="px-4 py-2">Start Time</th>
+                            <th className="px-4 py-2">End Time</th>
                             <th className="px-4 py-2">Action</th>
                         </tr>
                     </thead>
@@ -62,6 +63,8 @@ const EventList = ({ create }: EventFormProps) => {
                                 <td className="border px-4 py-2">{item.eventName}</td>
                                 <td className="border px-4 py-2">{item.address}</td>
                                 <td className="border px-4 py-2">{moment(item.time).format("HH:mm A")}</td>
+                                <td className="border px-4 py-2">{moment(item.end).format("HH:mm A")}</td>
+
                                 <td className="border px-4 py-2">
                                     <span style={{ display: 'flex', alignItems: 'center' }}>
                                         <BsFillTrashFill size={22} color="red" className="me-5" onClick={() => handleDelete(item.id)} />

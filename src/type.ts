@@ -3,6 +3,7 @@ export type Event = {
     eventName: string;
     address: string;
     time: string;
+    end:string;
 };
 
 export type EventItem = {
